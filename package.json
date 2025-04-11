@@ -1,0 +1,17 @@
+{
+  "name": "hikmah-e2e",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "Abu Hurayra",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@faker-js/faker": "^9.6.0",
+    "@playwright/test": "^1.51.1",
+    "@types/node": "^22.14.0",
+    "dotenv": "^16.5.0"
+  }
+}
