@@ -87,23 +87,23 @@ test.describe("Public Home Page", () => {
 
     await expect(page.locator('div').filter({ hasText: /^Login$/ })).toBeVisible();
     await expect(page.getByRole('article')).toMatchAriaSnapshot(`
-    - link "Abu Hurayra":
-      - img "Abu Hurayra"
-    - link "Abu Hurayra"
-    - button "Follow"
-    - link /ago/
-    - paragraph: Eid Mubarak
-    - img
-    - text: /\\d+ people \\d+ view/
-    - button "React":
+      - link "Abu Hurayra":
+        - img "Abu Hurayra"
+      - link "Abu Hurayra"
+      - button "Follow"
+      - link /ago/
+      - paragraph: Eid Mubarak
       - img
-    - button "Comment":
-      - img
-    - button "Share":
-      - img
-    - button "Save":
-      - img
-    `);
+      - text: /\\d+ views/
+      - button "React":
+        - img
+      - button "Comment":
+        - img
+      - button "Share":
+        - img
+      - button "Save":
+        - img
+      `);
     await expect(page.locator('#center')).toMatchAriaSnapshot(`
     - link "Abu Hurayra":
       - img "Abu Hurayra"
