@@ -142,6 +142,8 @@ test.describe("Public Home Page", () => {
       // scroll
       if (await feedItems.nth(i).isVisible()) {
         await feedItems.nth(i).scrollIntoViewIfNeeded();
+        // Print author name
+        // console.log(`${i}: ${await feedItems.nth(i).locator("a.base-username").first().textContent()}`);
       } else {
         await page.locator("div.v3-infinite-loading").scrollIntoViewIfNeeded();
         await page.waitForTimeout(1500);
@@ -153,8 +155,6 @@ test.describe("Public Home Page", () => {
       }
       await page.waitForTimeout(500);
 
-      // Print author name
-      // console.log(`${i}: ${await feedItems.nth(i).locator("a.base-username").first().textContent()}`);
     }
   });
 });
