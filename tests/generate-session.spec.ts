@@ -106,4 +106,8 @@ test("hikmah homepage - authenticated infinite scrolling", async ({ browser }) =
 
         await page.waitForTimeout(500);
     }
+
+    // moderation status strings should not be visible in the page
+    await expect.soft(page.getByText("Someone in our team is checking your content...")).not.toBeVisible();
+    await expect.soft(page.getByText("Rejected for having harmful content")).not.toBeVisible();
 });

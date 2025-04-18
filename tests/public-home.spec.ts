@@ -33,6 +33,7 @@ test.describe("Public Home Page", () => {
 
     // Verify the sign in button click
     await page.getByRole('link', { name: 'Sign in' }).click();
+    await page.waitForTimeout(1000);
     await expect(page).toHaveURL("https://id.kahf.co/?returnUrl=https%3A%2F%2Fhikmah.net%2Fauth%2Fkahf");
     await expect(page.getByRole('heading', { name: 'Sign in to your account' })).toBeVisible();
   });
@@ -47,13 +48,13 @@ test.describe("Public Home Page", () => {
     // Card items
     await page.getByRole('button', { name: "Follow" }).nth(0).click();
     await continueButton.click();
-    await page.locator('button:nth-child(1)').first().click();
+    await page.locator('div.feed-main-action button').nth(0).click();
     await continueButton.click();
-    await page.locator('button:nth-child(2)').first().click();
+    await page.locator('div.feed-main-action button').nth(1).click();
     await continueButton.click();
-    await page.locator('button:nth-child(3)').first().click();
+    await page.locator('div.feed-main-action button').nth(2).click();
     await continueButton.click();
-    await page.locator('button:nth-child(4)').first().click();
+    await page.locator('div.feed-main-action button').nth(3).click();
     await continueButton.click();
 
     // Scrolling should trigger the login popup
@@ -138,7 +139,7 @@ test.describe("Public Home Page", () => {
     const feedItems = page.locator('div.feed-item');
 
     // Test infinite scroll with for loop
-    for (let i = 0; i < 35; i+=2) {
+    for (let i = 0; i < 35; i += 2) {
       // scroll
       if (await feedItems.nth(i).isVisible()) {
         await feedItems.nth(i).scrollIntoViewIfNeeded();
@@ -148,13 +149,15 @@ test.describe("Public Home Page", () => {
         await page.locator("div.v3-infinite-loading").scrollIntoViewIfNeeded();
         await page.waitForTimeout(1500);
       }
-
       // if continueButton is visible, click it
       if (await continueButton.isVisible()) {
         await continueButton.click();
       }
       await page.waitForTimeout(500);
-
     }
+
+    // moderation status strings should not be visible in the page
+    await expect.soft(page.getByText("Someone in our team is checking your content...")).not.toBeVisible();
+    await expect.soft(page.getByText("Rejected for having harmful content")).not.toBeVisible();
   });
 });
