@@ -47,7 +47,7 @@ test("login to hikmah and save the session", async ({ browser }) => {
     await expect(page.getByRole('button', { name: '+ Add New Post' })).toBeVisible();
     await page.getByRole('button', { name: '+ Add New Post' }).click();
 
-    await page.context().storageState({ path: hikmahAuthFile });
+    // await page.context().storageState({ path: hikmahAuthFile });
 });
 
 test("hikmah - authenticated - CRUD Post", async ({ browser }) => {
@@ -57,31 +57,31 @@ test("hikmah - authenticated - CRUD Post", async ({ browser }) => {
     const postContent = randomSlug();
 
     // Ensure user is logged in
-    await expect(page.locator('#sidebarUserMenu').getByText('Abu Hurayra')).toBeVisible();
+    await expect.soft(page.locator('#sidebarUserMenu').getByText('Abu Hurayra')).toBeVisible();
     await page.locator('#sidebarUserMenu').getByText('Abu Hurayra').click();
 
     await page.locator('#top').getByText('@hurayraiit').waitFor();
-    await expect(page.locator('#top').getByText('@hurayraiit')).toBeVisible();
+    await expect.soft(page.locator('#top').getByText('@hurayraiit')).toBeVisible();
 
     // Create a post
     await page.getByRole('button', { name: 'Something nice to share?' }).click();
-    await expect(page.locator('div').filter({ hasText: /^Create post$/ })).toBeVisible();
+    await expect.soft(page.locator('div').filter({ hasText: /^Create post$/ })).toBeVisible();
     await page.getByRole('textbox', { name: 'Something nice to share?' }).fill(`### ${postContent}`);
-    await expect(page.getByRole('button', { name: 'Post', exact: true })).toBeVisible();
+    await expect.soft(page.getByRole('button', { name: 'Post', exact: true })).toBeVisible();
     await page.getByRole('button', { name: 'Post', exact: true }).click();
-    await expect(page.getByText('Your post is submitted for review.')).toBeVisible();
-    await expect(page.getByText('It will be published after some safety checks')).toBeVisible();
-    await expect(page.getByRole('heading', { name: postContent })).toBeVisible();
+    await expect.soft(page.getByText('Your post is submitted for review.')).toBeVisible();
+    await expect.soft(page.getByText('It will be published after some safety checks')).toBeVisible();
+    await expect.soft(page.getByRole('heading', { name: postContent })).toBeVisible();
 
     // Now delete post
     await page.locator('.pt-\\[0\\.1rem\\]').first().click();
-    await expect(page.getByRole('button', { name: 'Delete Post' })).toBeVisible();
-    await expect(page.getByRole('button', { name: 'Cancel' })).toBeVisible();
+    await expect.soft(page.getByRole('button', { name: 'Delete Post' })).toBeVisible();
+    await expect.soft(page.getByRole('button', { name: 'Cancel' })).toBeVisible();
     await page.getByRole('button', { name: 'Delete Post' }).click();
-    await expect(page.locator('div').filter({ hasText: /^Are you sure you want to delete this post\?$/ })).toBeVisible();
+    await expect.soft(page.locator('div').filter({ hasText: /^Are you sure you want to delete this post\?$/ })).toBeVisible();
     await page.getByRole('button', { name: 'Ok' }).click();
     await page.waitForTimeout(500);
-    await expect(page.getByRole('heading', { name: postContent })).not.toBeVisible();
+    await expect.soft(page.getByRole('heading', { name: postContent })).not.toBeVisible();
 });
 
 test("hikmah homepage - authenticated infinite scrolling", async ({ browser }) => {
