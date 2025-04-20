@@ -36,7 +36,7 @@ jobs:
           echo "KAHF_ID=${{ secrets.KAHF_ID }}" >> .env
 
       - name: Run Playwright tests
-        run: npx playwright test tests/public-home.spec.ts tests/tags.spec.ts tests/generate-session.spec.ts:87
+        run: npx playwright test
 
       - name: Upload Playwright report
         if: ${{ !cancelled() }}
