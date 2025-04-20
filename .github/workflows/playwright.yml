@@ -30,13 +30,13 @@ jobs:
       - name: Set up environment variables
         run: |
           mkdir -p playwright/.auth
-          echo "${{ secrets.KAHF01_SESSION }}" > playwright/.auth/kahf01.json
-          echo "${{ secrets.HIKMAH01_SESSION }}" > playwright/.auth/hikmah01.json
+          printf "%s" "${{ secrets.KAHF01_SESSION }}" > playwright/.auth/kahf01.json
+          printf "%s" "${{ secrets.HIKMAH01_SESSION }}" > playwright/.auth/hikmah01.js
           echo "BASE_URL=${{ secrets.BASE_URL }}" >> .env
           echo "KAHF_ID=${{ secrets.KAHF_ID }}" >> .env
 
       - name: Run Playwright tests
-        run: npx playwright test tests/public-home.spec.ts tests/tags.spec.ts
+        run: npx playwright test tests/public-home.spec.ts tests/tags.spec.ts tests/generate-session.spec.ts:87
 
       - name: Upload Playwright report
         if: ${{ !cancelled() }}
