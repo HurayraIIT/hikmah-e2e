@@ -30,8 +30,8 @@ jobs:
       - name: Set up environment variables
         run: |
           mkdir -p playwright/.auth
-          printf "%s" "${{ secrets.KAHF01_SESSION }}" > playwright/.auth/kahf01.json
-          printf "%s" "${{ secrets.HIKMAH01_SESSION }}" > playwright/.auth/hikmah01.js
+          echo "${{ secrets.KAHF01_SESSION }}" | base64 --decode > playwright/.auth/kahf01.json
+          echo "${{ secrets.HIKMAH01_SESSION }}" | base64 --decode > playwright/.auth/hikmah01.json
           echo "BASE_URL=${{ secrets.BASE_URL }}" >> .env
           echo "KAHF_ID=${{ secrets.KAHF_ID }}" >> .env
 
