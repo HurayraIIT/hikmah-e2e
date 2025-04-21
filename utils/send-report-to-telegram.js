@@ -6,24 +6,24 @@ dotenv.config();
 
 (async () => {
   try {
-    console.log("Starting Telegram report process...");
-    console.log("Environment check:", {
-      hasToken: !!process.env.TELEGRAM_BOT_TOKEN,
-      hasChannelId: !!process.env.TELEGRAM_CHANNEL_ID,
-      isCI: !!process.env.CI,
-    });
+    // console.log("Starting Telegram report process...");
+    // console.log("Environment check:", {
+    //   hasToken: !!process.env.TELEGRAM_BOT_TOKEN,
+    //   hasChannelId: !!process.env.TELEGRAM_CHANNEL_ID,
+    //   isCI: !!process.env.CI,
+    // });
 
     // Read the JSON report
     const reportPath = "./test-results/summary.json"; // Use correct path
-    console.log("Checking report path:", reportPath);
+    // console.log("Checking report path:", reportPath);
 
     if (!fs.existsSync(reportPath)) {
       throw new Error(`Report file not found at ${reportPath}`);
     }
 
-    console.log("Reading report file...");
+    // console.log("Reading report file...");
     const reportData = JSON.parse(fs.readFileSync(reportPath, "utf-8"));
-    console.log("Report data structure:", Object.keys(reportData));
+    // console.log("Report data structure:", Object.keys(reportData));
 
     // Initialize test summary details
     let total = 0,
@@ -49,7 +49,7 @@ dotenv.config();
     const environmentInfo = isCI ? "🏭 CI Environment" : "💻 Local Environment";
 
     // Format message
-    console.log("Formatting message...");
+    // console.log("Formatting message...");
     const message = `
 📊 *Test Execution Report*
 ━━━━━━━━━━━━━━━━━━━━━
@@ -80,7 +80,7 @@ ${isCI ? "🌐 CI Report" : "📋 Local Report"}: https://hikmah-e2e.hurayraiit.
 ━━━━━━━━━━━━━━━━━━━━━`;
 
     // Send message to Telegram
-    console.log("Sending message to Telegram...");
+    // console.log("Sending message to Telegram...");
     const url = `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`;
     try {
       const response = await axios.post(url, {
@@ -88,7 +88,7 @@ ${isCI ? "🌐 CI Report" : "📋 Local Report"}: https://hikmah-e2e.hurayraiit.
         text: message,
         parse_mode: "Markdown",
       });
-      console.log("Message sent successfully:", response.data);
+    //   console.log("Message sent successfully:", response.data);
     } catch (error) {
       console.error("Telegram API error:", {
         status: error.response?.status,
