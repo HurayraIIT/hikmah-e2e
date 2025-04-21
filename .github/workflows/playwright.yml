@@ -48,6 +48,18 @@ jobs:
           path: playwright-report/
           retention-days: 30
 
+      - name: Send report to Telegram
+        if: always()
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
+          CI: true
+        run: |
+          echo "Checking if report file exists..."
+          ls -la test-results/
+          echo "Attempting to send report to Telegram..."
+          node utils/send-report-to-telegram.js
+
       - name: Publish HTML report (https://hikmah-e2e.hurayraiit.com/)
         if: always()
         uses: peaceiris/actions-gh-pages@v4
@@ -58,6 +70,3 @@ jobs:
           force_orphan: true
           user_name: "github-actions[bot]"
           user_email: "github-actions[bot]@users.noreply.github.com"
-
-      - name: Send report to Telegram
-        run: node utils/send-report-to-telegram.js
