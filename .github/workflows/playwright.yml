@@ -46,33 +46,14 @@ jobs:
           path: playwright-report/
           retention-days: 30
 
-      - name: Publish to gh-pages branch
+      - name: Publish HTML report (https://hikmah-e2e.hurayraiit.com/)
         if: always()
-        env:
-          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-        run: |
-          if [ -d "playwright-report" ]; then
-            # Save playwright-report to a temporary location
-            mv playwright-report /tmp/playwright-report
-
-            git config --global user.name "github-actions[bot]"
-            git config --global user.email "github-actions[bot]@users.noreply.github.com"
-            
-            # Configure git to use token for authentication
-            git remote set-url origin https://${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-            
-            git checkout --orphan gh-pages
-            git rm -rf .
-            git clean -fxd
-
-            # Restore the report and copy contents
-            mv /tmp/playwright-report/* .
-            rm -rf /tmp/playwright-report
-
-            git add .
-            git commit -m "docs: update playwright report [skip ci]"
-            git push origin gh-pages --force
-          else
-            echo "playwright-report directory not found, skipping deployment"
-            exit 0
-          fi
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          publish_dir: playwright-report/
+          keep_files: false
+          force_orphan: true
+          cname: ""
+          user_name: "github-actions[bot]"
+          user_email: "github-actions[bot]@users.noreply.github.com"
