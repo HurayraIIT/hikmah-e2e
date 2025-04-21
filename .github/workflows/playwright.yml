@@ -57,6 +57,10 @@ jobs:
 
             git config --global user.name "github-actions[bot]"
             git config --global user.email "github-actions[bot]@users.noreply.github.com"
+            
+            # Configure git to use token for authentication
+            git remote set-url origin https://${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+            
             git checkout --orphan gh-pages
             git rm -rf .
             git clean -fxd
