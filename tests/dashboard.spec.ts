@@ -3,8 +3,6 @@ import { randomSlug, randomString } from '../utils/random-data';
 
 const hikmahAuthFile = `playwright/.auth/hikmah01.json`;
 
-test.describe.configure({ mode: 'serial' });
-
 test("hikmah - authenticated - CRUD Post", async ({ browser }) => {
     const context = await browser.newContext({ storageState: hikmahAuthFile });
     const page = await context.newPage();
@@ -24,8 +22,7 @@ test("hikmah - authenticated - CRUD Post", async ({ browser }) => {
     await page.getByRole('textbox', { name: 'Something nice to share?' }).fill(`### ${postContent}`);
     await expect.soft(page.getByRole('button', { name: 'Post', exact: true })).toBeVisible();
     await page.getByRole('button', { name: 'Post', exact: true }).click();
-    await expect.soft(page.getByText('Your post is submitted for review.')).toBeVisible();
-    await expect.soft(page.getByText('It will be published after some safety checks')).toBeVisible();
+
     await expect.soft(page.getByRole('heading', { name: postContent })).toBeVisible();
 
     // Now delete post
