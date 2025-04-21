@@ -11,7 +11,7 @@ export default defineConfig({
   workers: process.env.CI ? 4 : 4,
   timeout: 40 * 1000,
 
-  reporter: [["dot"], ["list"], ["html"]],
+  reporter: [['json', { outputFile: 'test-results/summary.json' }], ["dot"], ["list"], ["html"]],
 
   use: {
     baseURL: process.env.BASE_URL,
