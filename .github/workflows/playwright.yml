@@ -52,12 +52,19 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
           if [ -d "playwright-report" ]; then
+            # Save playwright-report to a temporary location
+            mv playwright-report /tmp/playwright-report
+
             git config --global user.name "github-actions[bot]"
             git config --global user.email "github-actions[bot]@users.noreply.github.com"
             git checkout --orphan gh-pages
             git rm -rf .
             git clean -fxd
-            cp -r playwright-report/* .
+
+            # Restore the report and copy contents
+            mv /tmp/playwright-report/* .
+            rm -rf /tmp/playwright-report
+
             git add .
             git commit -m "docs: update playwright report [skip ci]"
             git push origin gh-pages --force
