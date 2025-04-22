@@ -6,15 +6,15 @@ const hikmahAuthFile = `playwright/.auth/hikmah01.json`;
 test("hikmah - authenticated - CRUD Post", async ({ browser }) => {
     const context = await browser.newContext({ storageState: hikmahAuthFile });
     const page = await context.newPage();
-    await page.goto(`${process.env.BASE_URL}`);
+    await page.goto('/');
     const postContent = randomSlug();
 
     // Ensure user is logged in
-    await expect.soft(page.locator('#sidebarUserMenu').getByText('Abu Hurayra')).toBeVisible();
-    await page.locator('#sidebarUserMenu').getByText('Abu Hurayra').click();
+    await expect.soft(page.locator('#sidebarUserMenu').getByText('Khalid Yusuf')).toBeVisible();
+    await page.locator('#sidebarUserMenu').getByText('Khalid Yusuf').click();
 
-    await page.locator('#top').getByText('@hurayraiit').waitFor();
-    await expect.soft(page.locator('#top').getByText('@hurayraiit')).toBeVisible();
+    await page.locator('#top').getByText('@wpdabh').waitFor();
+    await expect.soft(page.locator('#top').getByText('@wpdabh')).toBeVisible();
 
     // Create a post
     await page.getByRole('button', { name: 'Something nice to share?' }).click();
@@ -39,7 +39,7 @@ test("hikmah - authenticated - CRUD Post", async ({ browser }) => {
 test("hikmah homepage - authenticated infinite scrolling", async ({ browser }) => {
     const context = await browser.newContext({ storageState: hikmahAuthFile });
     const page = await context.newPage();
-    await page.goto(`${process.env.BASE_URL}`);
+    await page.goto('/');
     await page.waitForLoadState('domcontentloaded');
 
     const feedItems = page.locator('div.feed-item');

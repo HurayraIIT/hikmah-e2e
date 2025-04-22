@@ -16,7 +16,7 @@ export default defineConfig({
   use: {
     baseURL: process.env.BASE_URL || `https://hikmah.net/`,
     screenshot: "on",
-    trace: "on-first-retry",
+    trace: "on",
     video: "on",
 
     ignoreHTTPSErrors: true,

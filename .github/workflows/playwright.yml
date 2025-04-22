@@ -36,6 +36,8 @@ jobs:
           echo "KAHF_ID=${{ secrets.KAHF_ID }}" >> .env
           echo "TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}" >> .env
           echo "TELEGRAM_CHANNEL_ID=${{ secrets.TELEGRAM_CHANNEL_ID }}" >> .env
+          echo "LinkedIn_PASSWORD=${{ secrets.LinkedIn_PASSWORD }}" >> .env
+          echo "LinkedIn_USERNAME=${{ secrets.LinkedIn_USERNAME }}" >> .env
 
       - name: Run Playwright tests
         run: npx playwright test

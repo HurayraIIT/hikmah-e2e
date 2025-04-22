@@ -13,7 +13,7 @@ test("hashtags - should not let unauthenticated users access the tags page", asy
 test("hashtags - should display the homepage interest section", async ({ browser }) => {
     const context = await browser.newContext({ storageState: hikmahAuthFile });
     const page = await context.newPage();
-    await page.goto(`${process.env.BASE_URL}`);
+    await page.goto('/');
     await page.waitForLoadState('domcontentloaded');
     await page.waitForTimeout(3000);
 
@@ -44,7 +44,7 @@ test("hashtags - should display the homepage interest section", async ({ browser
 test("hashtags - should show all hashtags in the hashtags suggest page", async ({ browser }) => {
     const context = await browser.newContext({ storageState: hikmahAuthFile });
     const page = await context.newPage();
-    await page.goto(`${process.env.BASE_URL}`);
+    await page.goto('/');
     await page.waitForLoadState('domcontentloaded');
     await page.waitForTimeout(3000);
 
@@ -74,7 +74,7 @@ test("hashtags - should show all hashtags in the hashtags suggest page", async (
     await expect(page.locator('#center').getByRole('button', { name: 'Follow' })).toBeVisible();
     await page.getByRole('link', { name: 'Karate_Overhung_Mourner_Freight_Reach9_Swinger 1 post' }).click();
     await expect(page.getByText('#Karate_Overhung_Mourner_Freight_Reach9_Swinger Follow')).toBeVisible();
-    await expect(page.getByText('Khalid Yusuf')).toBeVisible();
+    await expect(page.locator('#center').getByText('Khalid Yusuf')).toBeVisible();
     await expect(page.getByRole('paragraph').filter({ hasText: 'May Allah grant us jannah.' })).toBeVisible();
     await page.getByText('People').click();
     await expect(page.getByText('Khalid Yusuf@wpdabh')).toBeVisible();
