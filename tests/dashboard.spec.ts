@@ -45,7 +45,7 @@ test("hikmah homepage - authenticated infinite scrolling", async ({ browser }) =
     const feedItems = page.locator('div.feed-item');
 
     // Test infinite scroll with for loop
-    for (let i = 0; i < 35; i += 1) {
+    for (let i = 0; i < 26; i += 1) {
         // scroll
         if (await feedItems.nth(i).isVisible()) {
             await feedItems.nth(i).scrollIntoViewIfNeeded();

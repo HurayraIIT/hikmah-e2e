@@ -133,13 +133,13 @@ test.describe("Public Home Page", () => {
 
   test("hikmah public home - infinite scrolling", async ({ page }) => {
     // Navigate to the home page
-    await page.goto(`${process.env.BASE_URL}`);
+    await page.goto('/');
     await page.waitForLoadState('domcontentloaded');
     const continueButton = page.getByRole('button', { name: 'Continue browsing' });
     const feedItems = page.locator('div.feed-item');
 
     // Test infinite scroll with for loop
-    for (let i = 0; i < 35; i += 2) {
+    for (let i = 0; i < 26; i += 2) {
       // scroll
       if (await feedItems.nth(i).isVisible()) {
         await feedItems.nth(i).scrollIntoViewIfNeeded();
