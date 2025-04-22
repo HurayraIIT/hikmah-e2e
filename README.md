@@ -74,20 +74,19 @@ npx playwright --version
 First of all, make sure to run the tests locally. You can generate the kahf ID session by running the following test:
 
 ```sh
-npx playwright test tests/generate-session.spec.ts:10
+npx playwright test tests/auth.setup.ts:10
 ```
 
-Then run the following test to generate the hikmah session. Make sure that line:50 is not commented out!
+Then run the following test to generate the hikmah session. Make sure that line:50 is not commented out! However, this process is set as a project dependency, so no need to do this manually. When you run any test, this step will be automatically executed.
 
 ```sh
-npx playwright test tests/generate-session.spec.ts:30
+npx playwright test tests/auth.setup.ts:30
 ```
 
-Now run these commands to generate the base64 of the sessions:
+Now run these commands to generate the base64 of the kahf session:
 
 ```sh
 base64 -i playwright/.auth/kahf01.json > playwright/.auth/kahf01.b64
-base64 -i playwright/.auth/hikmah01.json > playwright/.auth/hikmah01.b64
 ```
 
 Finally visit [this page](https://github.com/HurayraIIT/hikmah-e2e/settings/secrets/actions) to add the newly generated base64 encoded session data.

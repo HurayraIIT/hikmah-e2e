@@ -1,13 +1,12 @@
 import { test, expect } from '@playwright/test';
 import { randomSlug, randomString } from '../utils/random-data';
 
-const kahfIdAuthFile = `playwright/.auth/kahf01.json`;
 const hikmahAuthFile = `playwright/.auth/hikmah01.json`;
 
 test("invite - verify page elements", async ({ browser }) => {
     const context = await browser.newContext({ storageState: hikmahAuthFile });
     const page = await context.newPage();
-    await page.goto(`${process.env.BASE_URL}`);
+    await page.goto('/');
     await page.waitForLoadState('domcontentloaded');
     await page.waitForTimeout(3000);
 
@@ -19,7 +18,7 @@ test("invite - verify page elements", async ({ browser }) => {
     await page.waitForLoadState('domcontentloaded');
     await expect(page.getByText('Invite Friends')).toBeVisible();
 
-    await page.goto(`${process.env.BASE_URL}`);
+    await page.goto('/');
     await page.waitForLoadState('domcontentloaded');
 
     await page.locator('#sidebarMenusList').getByRole('link', { name: 'Invite' }).click();
@@ -28,7 +27,7 @@ test("invite - verify page elements", async ({ browser }) => {
 
     // Verify the page contents
     await expect(page.getByText('Copy the link below to invite')).toBeVisible();
-    await expect(page.locator('#myUrl')).toHaveValue("https://hikmah.net?referrer=hurayraiit");
+    await expect(page.locator('#myUrl')).toHaveValue("https://hikmah.net?referrer=wpdabh");
     await expect(page.getByRole('button', { name: 'Copy link' })).toBeVisible();
     await expect(page.getByRole('button', { name: 'Share on Facebook' })).toBeVisible();
     await expect(page.getByRole('button', { name: 'Share on Twitter' })).toBeVisible();
@@ -47,5 +46,5 @@ test("invite - verify page elements", async ({ browser }) => {
     await page.getByRole('textbox', { name: 'Search' }).click();
     await page.keyboard.press('ControlOrMeta+V');
     await page.getByRole('textbox', { name: 'Search' }).press('Enter');
-    await expect(page.getByText('Search: https://hikmah.net?referrer=hurayraiit')).toBeVisible();
+    await expect(page.getByText('Search: https://hikmah.net?referrer=wpdabh')).toBeVisible();
 });

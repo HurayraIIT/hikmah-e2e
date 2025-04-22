@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 test.describe("Public Home Page", () => {
   test("hikmah public home - right column", async ({ page }) => {
     // Navigate to the home page
-    await page.goto(`${process.env.BASE_URL}`);
+    await page.goto('/');
     await page.waitForLoadState('domcontentloaded');
     const continueButton = page.getByRole('button', { name: 'Continue browsing' });
 

@@ -74,6 +74,7 @@ ${environmentInfo}
 • Failed: ${failed} ❌
 • Flaky: ${flaky} 🫨
 • Skipped: ${skipped} ⏭️
+• Duration: ${(reportData.stats.duration / 1000).toFixed(2)}s ⏱️
 
 🔗 *Detailed Report*
 ${isCI ? "🌐 CI Report" : "📋 Local Report"}: https://hikmah-e2e.hurayraiit.com

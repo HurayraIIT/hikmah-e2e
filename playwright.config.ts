@@ -14,7 +14,7 @@ export default defineConfig({
   reporter: [['json', { outputFile: 'test-results/summary.json' }], ["dot"], ["list"], ["html"]],
 
   use: {
-    baseURL: process.env.BASE_URL,
+    baseURL: process.env.BASE_URL || `https://hikmah.net/`,
     screenshot: "on",
     trace: "on-first-retry",
     video: "on",
@@ -28,8 +28,13 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
+      name: 'setup',
+      testMatch: /.*\.setup\.ts/,
+    },
+    {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
+      dependencies: ['setup'],
     },
 
     // {
