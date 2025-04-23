@@ -70,9 +70,9 @@ test("hashtags - should show all hashtags in the hashtags suggest page", async (
     await page.getByRole('textbox', { name: 'Enter tags' }).click();
     await page.getByRole('textbox', { name: 'Enter tags' }).fill('Karate_Overhung_Mourner_Freight_Reach9_Swinger');
     await page.waitForTimeout(1000);
-    await expect(page.getByRole('link', { name: 'Karate_Overhung_Mourner_Freight_Reach9_Swinger 1 post' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Karate_Overhung_Mourner_Freight_Reach9_Swinger 2 posts' })).toBeVisible();
     await expect(page.locator('#center').getByRole('button', { name: 'Follow' })).toBeVisible();
-    await page.getByRole('link', { name: 'Karate_Overhung_Mourner_Freight_Reach9_Swinger 1 post' }).click();
+    await page.getByRole('link', { name: 'Karate_Overhung_Mourner_Freight_Reach9_Swinger 2 posts' }).click();
     await expect(page.getByText('#Karate_Overhung_Mourner_Freight_Reach9_Swinger Follow')).toBeVisible();
     await expect(page.locator('#center').getByText('Khalid Yusuf')).toBeVisible();
     await expect(page.getByRole('paragraph').filter({ hasText: 'May Allah grant us jannah.' })).toBeVisible();
