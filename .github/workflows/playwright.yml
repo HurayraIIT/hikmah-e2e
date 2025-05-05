@@ -1,74 +1,74 @@
-name: Playwright Tests
-on:
-  push:
-    branches: [main, master]
-  pull_request:
-    branches: [main, master]
-  schedule:
-    - cron: "0 */8 * * *" # Every 8 hours (UTC)
+# name: Playwright Tests
+# on:
+#   push:
+#     branches: [main, master]
+#   pull_request:
+#     branches: [main, master]
+#   schedule:
+#     - cron: "0 */8 * * *" # Every 8 hours (UTC)
 
-jobs:
-  test:
-    timeout-minutes: 60
-    runs-on: ubuntu-latest
+# jobs:
+#   test:
+#     timeout-minutes: 60
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: 20
 
-      - name: Install dependencies
-        run: npm ci
+#       - name: Install dependencies
+#         run: npm ci
 
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+#       - name: Install Playwright Browsers
+#         run: npx playwright install --with-deps
 
-      - name: Set up environment variables
-        run: |
-          mkdir -p playwright/.auth
-          echo "${{ secrets.KAHF01_SESSION }}" | base64 --decode > playwright/.auth/kahf01.json
-          echo "{}" > playwright/.auth/hikmah01.json
-          echo "BASE_URL=${{ secrets.BASE_URL }}" >> .env
-          echo "KAHF_ID=${{ secrets.KAHF_ID }}" >> .env
-          echo "TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}" >> .env
-          echo "TELEGRAM_CHANNEL_ID=${{ secrets.TELEGRAM_CHANNEL_ID }}" >> .env
-          echo "LinkedIn_PASSWORD=${{ secrets.LinkedIn_PASSWORD }}" >> .env
-          echo "LinkedIn_USERNAME=${{ secrets.LinkedIn_USERNAME }}" >> .env
+#       - name: Set up environment variables
+#         run: |
+#           mkdir -p playwright/.auth
+#           echo "${{ secrets.KAHF01_SESSION }}" | base64 --decode > playwright/.auth/kahf01.json
+#           echo "{}" > playwright/.auth/hikmah01.json
+#           echo "BASE_URL=${{ secrets.BASE_URL }}" >> .env
+#           echo "KAHF_ID=${{ secrets.KAHF_ID }}" >> .env
+#           echo "TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}" >> .env
+#           echo "TELEGRAM_CHANNEL_ID=${{ secrets.TELEGRAM_CHANNEL_ID }}" >> .env
+#           echo "LinkedIn_PASSWORD=${{ secrets.LinkedIn_PASSWORD }}" >> .env
+#           echo "LinkedIn_USERNAME=${{ secrets.LinkedIn_USERNAME }}" >> .env
 
-      - name: Run Playwright tests
-        run: npx playwright test
+#       - name: Run Playwright tests
+#         run: npx playwright test
 
-      - name: Upload Playwright report
-        if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-report
-          path: playwright-report/
-          retention-days: 30
+#       - name: Upload Playwright report
+#         if: ${{ !cancelled() }}
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: playwright-report
+#           path: playwright-report/
+#           retention-days: 30
 
-      - name: Send report to Telegram
-        if: always()
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
-          CI: true
-        run: |
-          echo "Checking if report file exists..."
-          ls -la test-results/
-          echo "Attempting to send report to Telegram..."
-          node utils/send-report-to-telegram.js
+#       - name: Send report to Telegram
+#         if: always()
+#         env:
+#           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+#           TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
+#           CI: true
+#         run: |
+#           echo "Checking if report file exists..."
+#           ls -la test-results/
+#           echo "Attempting to send report to Telegram..."
+#           node utils/send-report-to-telegram.js
 
-      - name: Publish HTML report (https://hikmah-e2e.hurayraiit.com/)
-        if: always()
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          publish_dir: playwright-report/
-          keep_files: false
-          force_orphan: true
-          user_name: "github-actions[bot]"
-          user_email: "github-actions[bot]@users.noreply.github.com"
+#       - name: Publish HTML report (https://hikmah-e2e.hurayraiit.com/)
+#         if: always()
+#         uses: peaceiris/actions-gh-pages@v4
+#         with:
+#           github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+#           publish_dir: playwright-report/
+#           keep_files: true
+#           force_orphan: true
+#           user_name: "github-actions[bot]"
+#           user_email: "github-actions[bot]@users.noreply.github.com"
